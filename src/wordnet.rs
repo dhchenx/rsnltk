@@ -4,7 +4,7 @@ use pyo3::prelude::*;
 use pyo3::types::IntoPyDict;
 
 ///
-/// Estimate the similarity between twn synsets based on WordNet
+/// Estimate the similarity between twn synsets based on WordNet (pip install semantic-kit) required
 ///
 pub fn wordnet_similarity(s1:&str,s2:&str)->HashMap<String,f32>{
     match _wordnet_similarity(s1,s2){

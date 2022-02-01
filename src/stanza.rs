@@ -424,6 +424,90 @@ fn _ner(text:&str,lang:&str) -> PyResult<Vec<HashMap<String,String>>> {
             "",
         )?.getattr("getNER")?.call((),Some(kwargs.into_py_dict(py)))?.extract()?;
 
+        // println!("{:?}",list_result);
+
+        Ok(list_result)
+    })
+}
+
+///
+/// The dependency parsing module builds a tree structure of words from the input sentence, which represents the syntactic dependency relations between words.
+/// https://stanfordnlp.github.io/stanza/depparse.html
+///
+pub fn dependency_tree(text:&str,lang:&str)->Vec<Vec<HashMap<String,String>>>{
+
+    let result;
+    if lang=="zh"{
+        result=_dependency_tree_chinese(text,lang);
+    }else{
+        result=_dependency_tree(text,lang);
+    }
+
+    match result{
+        Ok(t)=>{
+            //println!("{:?}",t);
+            t
+        },
+        Err(e)=>{
+            println!("{:?}",e);
+            Vec::new()
+        }
+    }
+}
+
+fn _dependency_tree_chinese(text:&str,lang:&str) -> PyResult<Vec<Vec<HashMap<String,String>>>> {
+
+    let py_tokenize=concat!(
+    "from nerkit.StanzaApi import StanzaWrapper\n",
+    "def parse_dependency_chinese(text,lang):\n",
+    "\tsw=StanzaWrapper()\n",
+    "\treturn sw.parse_dependency_chinese(text=text,lang=lang)\n"
+    );
+
+    // "from nerkit.StanzaApi import StanzaWrapper\ndef getNER(text_en,a):\n\tsw=StanzaWrapper()\n\treturn sw.ner(text_en)"
+    let kwargs = vec![
+        ( "text", text)
+        , ("lang", lang)
+    ];
+
+    Python::with_gil(|py| {
+        let list_result:Vec<Vec<HashMap<String,String>>> = PyModule::from_code(
+            py,
+            py_tokenize,
+            "",
+            "",
+        )?.getattr("parse_dependency_chinese")?.call((),Some(kwargs.into_py_dict(py)))?.extract()?;
+
+        println!("{:?}",list_result);
+
+        Ok(list_result)
+    })
+}
+
+
+fn _dependency_tree(text:&str,lang:&str) -> PyResult<Vec<Vec<HashMap<String,String>>>> {
+
+    let py_tokenize=concat!(
+    "from nerkit.StanzaApi import StanzaWrapper\n",
+    "def parse_dependency(text,lang):\n",
+    "\tsw=StanzaWrapper()\n",
+    "\treturn sw.parse_dependency(text=text,lang=lang)\n"
+    );
+
+    // "from nerkit.StanzaApi import StanzaWrapper\ndef getNER(text_en,a):\n\tsw=StanzaWrapper()\n\treturn sw.ner(text_en)"
+    let kwargs = vec![
+        ( "text", text)
+        , ("lang", lang)
+    ];
+
+    Python::with_gil(|py| {
+        let list_result:Vec<Vec<HashMap<String,String>>> = PyModule::from_code(
+            py,
+            py_tokenize,
+            "",
+            "",
+        )?.getattr("parse_dependency")?.call((),Some(kwargs.into_py_dict(py)))?.extract()?;
+
         println!("{:?}",list_result);
 
         Ok(list_result)

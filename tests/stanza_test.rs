@@ -1,7 +1,7 @@
 
 #[cfg(test)]
 mod tests {
-    use rsnltk::{download_lang,ner,tokenize,download_langs,tokenize_sentence,lang,sentiment,mwt_expand,pos};
+    use rsnltk::{download_lang, ner, tokenize, download_langs, tokenize_sentence, lang, sentiment, mwt_expand, pos, dependency_tree};
     use crate::*;
 
     # [test] // before use the rsnltk library, you need to download target language package from Stanza's website.
@@ -91,6 +91,19 @@ mod tests {
         let sentiments=sentiment(text,lang);
         for sen in sentiments{
             println!("{:?}",sen);
+        }
+    }
+
+    # [test]
+    fn test_dependency_tree(){
+        let text="I like you. Do you like me?";
+        let lang="en";
+        let list_results=dependency_tree(text,lang);
+        for list_token in list_results{
+            for token in list_token{
+                println!("{:?}",token)
+            }
+
         }
     }
 

@@ -22,9 +22,9 @@ Additionally, we can calculate the similarity between words based on WordNet tho
 
 1. Make sure you install Python 3.6.6+ and PIP environment in your computer. Type `python -V` in the Terminal should print no error message;
 
-2. Install our [PyPI package](https://pypi.org/project/ner-kit/) `ner-kit` (version>=0.0.5a1) for binding the `Stanza` package via `pip install ner-kit==0.0.5a1`;
+2. Install our Python-based [ner-kit](https://pypi.org/project/ner-kit/) (version>=0.0.5a2) for binding the `Stanza` package via `pip install ner-kit==0.0.5a2`;
 
-3. Then, Rust environment is also installed in your computer. I use IntelliJ to develop Rust-based applications, where you can write Rust codes;
+3. Then, Rust should be also installed in your computer. I use IntelliJ to develop Rust-based applications, where you can write Rust codes;
 
 4. Create a simple Rust application project with a `main()` function. 
 
@@ -52,9 +52,11 @@ fn init_rsnltk_and_test(){
 }
 ```
 
-Or you can manually install those language models via the Python-based `ner-kit` package which provide more features in using Stanza. Go to: [ner-kit](https://pypi.org/project/ner-kit/)
+Or you can manually install those [language models](https://stanfordnlp.github.io/stanza/available_models.html) via the Python-based `ner-kit` package which provides more features in using Stanza. Go to: [ner-kit](https://pypi.org/project/ner-kit/)
 
 If no error occur in the above example, then it works. Finally, you can try the following advanced example usage.
+
+Currently, we tested the use of English and Chinese language models; however, other language models should work as well. 
 
 ## Examples
 
@@ -160,6 +162,8 @@ Example 7: MWT expand
 
 Example 8: Estimate the similarity between words in WordNet
 
+You need to firstly install `semantic-kit` PyPI package!
+
 ```rust
     fn test_wordnet_similarity(){
         let s1="dog.n.1";
@@ -169,6 +173,21 @@ Example 8: Estimate the similarity between words in WordNet
             println!("{:?}",sim);
         }
     }
+```
+
+Example 9: Obtain a dependency tree from a text
+```rust
+fn test_dependency_tree(){
+    let text="I like you. Do you like me?";
+    let lang="en";
+    let list_results=dependency_tree(text,lang);
+    for list_token in list_results{
+        for token in list_token{
+            println!("{:?}",token)
+        }
+
+    }
+}
 ```
 
 ## Credits
