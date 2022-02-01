@@ -1,0 +1,42 @@
+[[bin]]
+name="rsnltk_main"
+path="src/main.rs"
+
+[package]
+name = "rsnltk-experiment"
+version = "0.1.1"
+edition = "2021"
+description = "Rust-based Natural Language Toolkit using Python Bindings"
+readme = "README.md"
+repository = "https://github.com/dhchenx/rsnltk/"
+documentation = "https://docs.rs/crate/rsnltk/latest"
+license = "MIT"
+keywords = [ "nltk", "Stanza","CoreNLP","text-analysis","semantics"]
+categories = ["text-processing","parsing"]
+exclude=[
+    "data",
+    ".idea",
+    "target",
+    "examples"
+]
+publish=false
+
+[lib]
+crate-type=["cdylib","rlib"]
+name="rsnltk"
+path= "src/lib.rs"
+
+[dependencies]
+natural = { version = "0.4.0", features = ["serde_support"]}
+serde = "1.0"
+whatlang = "0.12.0"
+yn = "0.1.1"
+unicode-segmentation = "1.8.0"
+ndarray = "0.15.4"
+word2vec = "0.3.3"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies.pyo3]
+version = "0.15.1"
+features = ["auto-initialize"]
