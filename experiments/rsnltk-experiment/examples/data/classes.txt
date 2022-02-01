@@ -1,0 +1,5 @@
+Over time, I've written a few mdbooks/gitbooks using Rust to explain interesting concepts or try to take a deep dive into some of Rust's inner workings. Common to all of them is that they relied a lot on unstable features, most notably the "original" asm! macro (later renamed to llvm_asm!).
+
+Due to frequent changes to these features, several examples didn't compile or work as they did when the books were written, and it's been a problem for quite a long time.
+
+I just wanted to let everyone know that the books have now been updated with the new asm! syntax, the dialect changed from AT&T to Intel (which is the new default) and all examples are now working in addition to other minor improvements.

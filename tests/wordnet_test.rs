@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod tests{
-    use rsnltk::*;
+    use rsnltk::wordnet::wordnet_similarity;
     #[test]
     fn test_wordnet_similarity(){
         let s1="dog.n.1";

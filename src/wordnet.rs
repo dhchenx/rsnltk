@@ -1,8 +1,5 @@
-use std::any::Any;
 use std::collections::HashMap;
 use pyo3::prelude::*;
-use pyo3::types::IntoPyDict;
-
 ///
 /// Estimate the similarity between twn synsets based on WordNet (pip install semantic-kit) required
 ///

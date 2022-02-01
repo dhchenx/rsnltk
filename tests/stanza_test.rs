@@ -2,7 +2,6 @@
 #[cfg(test)]
 mod tests {
     use rsnltk::{download_lang, ner, tokenize, download_langs, tokenize_sentence, lang, sentiment, mwt_expand, pos, dependency_tree};
-    use crate::*;
 
     # [test] // before use the rsnltk library, you need to download target language package from Stanza's website.
     fn test_download_langs(){

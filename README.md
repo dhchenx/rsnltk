@@ -1,13 +1,15 @@
 # Rust-based Natural Language Toolkit (rsnltk)
 A Rust library to support natural language processing with Python bindings
 
+[Rust Docs](https://docs.rs/rsnltk/0.1.1) | [Crates Home Page](https://crates.io/crates/rsnltk) | [Tests](https://github.com/dhchenx/rsnltk/tree/main/tests) | [NER-Kit](https://pypi.org/project/ner-kit/) 
+
 ## Features
-The `rsnltk` library integrates various existing Python-based NLP toolkits for powerful text analysis in Rust-based applications. 
+The `rsnltk` library integrates various existing Python-written NLP toolkits for powerful text analysis in Rust-based applications. 
 
 ## Current Features
-This toolkit is based on the Python-based [Stanza](https://stanfordnlp.github.io/stanza/) and other important libraries.
+This toolkit is based on the Python-written [Stanza](https://stanfordnlp.github.io/stanza/) and other important NLP crates.
 
-A list of functions from Stanza we bind here include:
+A list of functions from Stanza and others we bind here include:
 - Tokenize
 - Sentence Segmentation
 - Multi-Word Token Expansion
@@ -15,6 +17,11 @@ A list of functions from Stanza we bind here include:
 - Named Entity Recognition
 - Sentiment Analysis
 - Language Identification
+- Dependency Tree Analysis
+
+Some amazing crates are also included in `rsnltk` but with simplified APIs for actual use:
+- [word2vec](https://crates.io/crates/word2vec)
+- [natural](https://crates.io/crates/natural), [yn](https://crates.io/crates/yn), [whatlang](https://crates.io/crates/whatlang). 
 
 Additionally, we can calculate the similarity between words based on WordNet though the `semantic-kit` PyPI project via `pip install semantic-kit`.
 
@@ -28,7 +35,7 @@ Additionally, we can calculate the similarity between words based on WordNet tho
 
 4. Create a simple Rust application project with a `main()` function. 
 
-5. Add the `rsnltk` dependency to the `Cargo.toml` file, keep up the Latest version. 
+5. Add the `rsnltk` dependency to the `Cargo.toml` file, keep up the Latest version.
 
 6. After you add the `rsnltk` dependency in the `toml file`, install necessary language models from Stanza using the following Rust code for the first time you use this package.
 
@@ -52,13 +59,13 @@ fn init_rsnltk_and_test(){
 }
 ```
 
-Or you can manually install those [language models](https://stanfordnlp.github.io/stanza/available_models.html) via the Python-based `ner-kit` package which provides more features in using Stanza. Go to: [ner-kit](https://pypi.org/project/ner-kit/)
+Or you can manually install those [language models](https://stanfordnlp.github.io/stanza/available_models.html) via the Python-written `ner-kit` package which provides more features in using Stanza. Go to: [ner-kit](https://pypi.org/project/ner-kit/)
 
-If no error occur in the above example, then it works. Finally, you can try the following advanced example usage.
+If no error occurs in the above example, then it works. Finally, you can try the following advanced example usage.
 
 Currently, we tested the use of English and Chinese language models; however, other language models should work as well. 
 
-## Examples
+## Examples with `Stanza` Bindings
 
 Example 1: Part-of-speech Analysis
 
@@ -187,6 +194,44 @@ fn test_dependency_tree(){
         }
 
     }
+}
+```
+
+## Examples in Pure Rust
+
+Example 1: Word2Vec
+
+```rust
+fn test_open_wv_bin(){
+    let wv_model=wv_get_model("GoogleNews-vectors-negative300.bin");
+    let positive = vec!["woman", "king"];
+    let negative = vec!["man"];
+    println!("analogy: {:?}", wv_analogy(&wv_model,positive, negative, 10));
+    println!("cosine: {:?}", wv_cosine(&wv_model,"man", 10));
+}
+```
+
+Example 2: Text summarization
+
+```rust
+    use rsnltk::native::summarizer::*;
+    fn test_summarize(){
+        let text="Some large txt...";
+        let stopwords=&[];
+        let summarized_text=summarize(text,stopwords,5);
+        println!("{}",summarized_text);
+    }
+```
+
+Example 3: Token list
+```rust
+use rsnltk::native::token::get_token_list;
+fn test_get_token_list(){
+        let s="Hello, Rust. How are you?";
+        let result=get_token_list(s);
+        for r in result{
+            println!("{}\t{:?}",r.text,r);
+        }
 }
 ```
 
