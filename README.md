@@ -6,7 +6,7 @@ A Rust library to support natural language processing with Python bindings
 ## Features
 The `rsnltk` library integrates various existing Python-written NLP toolkits for powerful text analysis in Rust-based applications. 
 
-## Current Features
+## Functions
 This toolkit is based on the Python-written [Stanza](https://stanfordnlp.github.io/stanza/) and other important NLP crates.
 
 A list of functions from Stanza and others we bind here include:
