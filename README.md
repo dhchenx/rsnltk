@@ -1,7 +1,7 @@
 # Rust-based Natural Language Toolkit (rsnltk)
-A Rust library to support natural language processing with Python bindings
+A Rust library to support natural language processing with pure Rust implementation and Python bindings
 
-[Rust Docs](https://docs.rs/rsnltk/0.1.1) | [Crates Home Page](https://crates.io/crates/rsnltk) | [Tests](https://github.com/dhchenx/rsnltk/tree/main/tests) | [NER-Kit](https://pypi.org/project/ner-kit/) 
+[Rust Docs](https://docs.rs/rsnltk/0.1.1) | [Crates Home Page](https://crates.io/crates/rsnltk) | [Tests](https://github.com/dhchenx/rsnltk/tree/main/tests) | [NER-Kit](https://pypi.org/project/ner-kit/)
 
 ## Features
 The `rsnltk` library integrates various existing Python-written NLP toolkits for powerful text analysis in Rust-based applications. 
@@ -65,7 +65,7 @@ If no error occurs in the above example, then it works. Finally, you can try the
 
 Currently, we tested the use of English and Chinese language models; however, other language models should work as well. 
 
-## Examples with `Stanza` Bindings
+## Examples with Stanza Bindings
 
 Example 1: Part-of-speech Analysis
 
@@ -75,7 +75,6 @@ Example 1: Part-of-speech Analysis
     //let lang="zh";
     let text="I like apple";
     let lang="en";
-
     let list_result=pos(text,lang);
     for word in list_result{
         println!("{:?}",word);
@@ -90,7 +89,6 @@ Example 2: Sentiment Analysis
         //let lang="en";
         let text="我喜欢北京";
         let lang="zh";
-
         let sentiments=sentiment(text,lang);
         for sen in sentiments{
             println!("{:?}",sen);
@@ -115,14 +113,12 @@ Example 3: Named Entity Recognition
     }
 ```
 
-Example 4: Tokenize
+Example 4: Tokenize for Multiple Languages
 
 ```rust
     fn test_tokenize(){
-
         let text="我喜欢北京、上海和纽约！";
         let lang="zh";
-
         let list_result=tokenize(text,lang);
         for ner in list_result{
             println!("{:?}",ner);
@@ -199,7 +195,7 @@ fn test_dependency_tree(){
 
 ## Examples in Pure Rust
 
-Example 1: Word2Vec
+Example 1: Word2Vec similarity
 
 ```rust
 fn test_open_wv_bin(){
@@ -223,7 +219,7 @@ Example 2: Text summarization
     }
 ```
 
-Example 3: Token list
+Example 3: Get token list from English strings
 ```rust
 use rsnltk::native::token::get_token_list;
 fn test_get_token_list(){
@@ -235,10 +231,33 @@ fn test_get_token_list(){
 }
 ```
 
+Example 4: Word segmentation for some language where no space exists between terms, e.g. Chinese text.
+
+We implement three word segmentation methods in this version:
+
+- Forward Maximum Matching (fmm), which is baseline method
+- Backward Maximum Matching (bmm), which is considered better
+- Bidirectional Maximum Matching (bimm), high accuracy but low speed
+
+```rust
+use rsnltk::native::segmentation::*;
+fn test_real_word_segmentation(){
+    let dict_path="30wdict.txt"; // empty if only for tokenizing
+    let stop_path="baidu_stopwords.txt";// empty when no stop words
+    let _sentence="美国太空总署希望，在深海的探险发现将有助于解开一些外太空的秘密，\
+    同时也可以测试前往太阳系其他星球探险所需的一些设备和实验。";
+    let meaningful_words=get_segmentation(_sentence,dict_path,stop_path, "bimm");
+    // bimm can be changed to fmm or bmm. 
+    println!("Result: {:?}",meaningful_words);
+}
+```
+
 ## Credits
 
 Thank [Stanford NLP Group](https://github.com/stanfordnlp/stanza) for their hard work in [Stanza](https://stanfordnlp.github.io/stanza/). 
 
 ## License
-MIT
+The `rsnltk` library with MIT License is provided by [Donghua Chen](https://github.com/dhchenx). 
+
+
 

@@ -1,12 +1,12 @@
 # Rust-based Natural Language Toolkit (rsnltk)
 A Rust library to support natural language processing with Python bindings
 
-[Rust Docs](https://docs.rs/rsnltk/0.1.1) | [Crates Home Page](https://crates.io/crates/rsnltk) | [Tests](https://github.com/dhchenx/rsnltk/tree/main/tests) | [NER-Kit](https://pypi.org/project/ner-kit/) 
+[Rust Docs](https://docs.rs/rsnltk/0.1.1) | [Crates Home Page](https://crates.io/crates/rsnltk) | [Tests](https://github.com/dhchenx/rsnltk/tree/main/tests) | [NER-Kit](https://pypi.org/project/ner-kit/)
 
 ## Features
 The `rsnltk` library integrates various existing Python-written NLP toolkits for powerful text analysis in Rust-based applications. 
 
-## Current Features
+## Functions
 This toolkit is based on the Python-written [Stanza](https://stanfordnlp.github.io/stanza/) and other important NLP crates.
 
 A list of functions from Stanza and others we bind here include:
@@ -65,7 +65,7 @@ If no error occurs in the above example, then it works. Finally, you can try the
 
 Currently, we tested the use of English and Chinese language models; however, other language models should work as well. 
 
-## Examples with `Stanza` Bindings
+## Examples with Stanza Bindings
 
 Example 1: Part-of-speech Analysis
 
@@ -115,7 +115,7 @@ Example 3: Named Entity Recognition
     }
 ```
 
-Example 4: Tokenize
+Example 4: Tokenize for Multiple Languages
 
 ```rust
     fn test_tokenize(){
@@ -199,7 +199,7 @@ fn test_dependency_tree(){
 
 ## Examples in Pure Rust
 
-Example 1: Word2Vec
+Example 1: Word2Vec similarity
 
 ```rust
 fn test_open_wv_bin(){
@@ -223,7 +223,7 @@ Example 2: Text summarization
     }
 ```
 
-Example 3: Token list
+Example 3: Get token list from English strings
 ```rust
 use rsnltk::native::token::get_token_list;
 fn test_get_token_list(){
@@ -232,6 +232,27 @@ fn test_get_token_list(){
         for r in result{
             println!("{}\t{:?}",r.text,r);
         }
+}
+```
+
+Example 4: Word segmentation for some language where no space exists between terms, e.g. Chinese text.
+
+We implement three word segmentation methods in this version:
+
+- Forward Maximum Matching (fmm), which is baseline method
+- Backward Maximum Matching (bmm), which is considered better
+- Bidirectional Maximum Matching (bimm), high accuracy but low speed
+
+```rust
+use rsnltk::native::segmentation::*;
+fn test_real_word_segmentation(){
+    let dict_path="30wdict.txt"; // empty if only for tokenizing
+    let stop_path="baidu_stopwords.txt";// empty when no stop words
+    let _sentence="美国太空总署希望，在深海的探险发现将有助于解开一些外太空的秘密，\
+    同时也可以测试前往太阳系其他星球探险所需的一些设备和实验。";
+    let meaningful_words=get_segmentation(_sentence,dict_path,stop_path, "bimm");
+    // bimm can be changed to fmm or bmm. 
+    println!("Result: {:?}",meaningful_words);
 }
 ```
 

@@ -4,7 +4,7 @@ path="src/main.rs"
 
 [package]
 name = "rsnltk"
-version = "0.1.2"
+version = "0.1.3"
 edition = "2021"
 description = "Rust-based Natural Language Toolkit"
 readme = "README.md"
@@ -34,6 +34,7 @@ yn = "0.1.1"
 unicode-segmentation = "1.8.0"
 ndarray = "0.15.4"
 word2vec = "0.3.3"
+
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
