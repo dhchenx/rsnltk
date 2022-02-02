@@ -41,7 +41,8 @@ Additionally, we can calculate the similarity between words based on WordNet tho
 
 ```rust
 fn init_rsnltk_and_test(){
-    // 1. first install the necessary language models using language codes
+    // 1. first install the necessary language models 
+    // using language codes
     let list_lang=vec!["en","zh"]; 
     //e.g. you install two language models, 
     // namely, for English and Chinese text analysis.
