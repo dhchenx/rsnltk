@@ -290,7 +290,7 @@ use std::fs::{File, read_dir};
 use std::io::prelude::*;
 use std::path::Path;
 
-fn _read_lines<P>(filename: P) -> io::Result<io::Lines<io::BufReader<File>>>
+pub fn _read_lines<P>(filename: P) -> io::Result<io::Lines<io::BufReader<File>>>
     where P: AsRef<Path>, {
     let file = File::open(filename)?;
     Ok(io::BufReader::new(file).lines())
