@@ -4,7 +4,6 @@ use std::*;
 extern crate  unicode_segmentation;
 use std::collections::HashMap;
 use unicode_segmentation::UnicodeSegmentation;
-use rsfile::*;
 
 
 ///
@@ -74,39 +73,6 @@ pub fn get_segmentation(_sentence:&str,dict_path:&str,stopwords_path:&str,method
 
 }
 
-fn _get_segmentation_heavy(){
-    println!("loading common dictionary");
-    let lines=read_lines("D:\\GitHub\\rsnltk\\experiments\\rsnltk-experiment\\examples\\data\\dicts\\30wdict.txt");
-    let mut common_words:Vec<String>=Vec::new();
-    for l in lines{
-        println!("{}",l);
-        if !common_words.contains(&l){
-            common_words.push(l.to_string().replace("\n",""));
-        }
-    }
-    println!("loading stopwords dictionary");
-    let lines_stop=read_lines("D:\\GitHub\\rsnltk\\experiments\\rsnltk-experiment\\examples\\data\\dicts\\stopwords\\baidu_stopwords.txt");
-    let mut stop_words:Vec<String>=Vec::new();
-    for l in lines_stop{
-        if !common_words.contains(&l){
-            stop_words.push(l.to_string().replace("\n",""));
-        }
-    }
-    println!("dong segmentation tasks");
-    let _sentence="美国太空总署希望，在深海的探险发现将有助于解开一些外太空的秘密，同时也可以测试前往太阳系其他星球探险所需的一些设备和实验。";
-    let sentence=_sentence.graphemes(true).collect::<Vec<&str>>();
-    let bimm_result=bimm(sentence,common_words);
-    let mut meaningful_words:Vec<String>=Vec::new();
-
-    println!("removing stop words...");
-    for word in bimm_result{
-        if !stop_words.contains(&word){
-            meaningful_words.push(word);
-        }
-    }
-
-    println!("Result: {:?}",meaningful_words);
-}
 
 ///
 /// Bidirection Maximum Matching Method
