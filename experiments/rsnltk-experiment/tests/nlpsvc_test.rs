@@ -1,19 +1,25 @@
 #[cfg(test)]
 mod tests {
-
     use rsnltk::native::nlpsvc::annotated_document::*;
     use rsnltk::native::nlpsvc::english_rules::EnglishTokenizer;
     use rsnltk::native::nlpsvc::regex_tokenizer::RegexTokenizer;
+
+    // Tokenize the English text
     # [test]
-    fn test1(){
-        let text="A Rust library to support natural language processing with pure Rust implementation and Python bindings!";
+    fn get_token_pos_list(){
+        let text="A Rust library to support natural language processing!";
         let mut tokenizer = EnglishTokenizer::new();   // compile regex patterns
         let mut doc = AnnotatedDocument::new(text);
         tokenizer.apply_to(&mut doc);
+        println!("Result is: ");
+        let mut cursor = doc.get_trees().first();
+        while cursor.is_valid() {
+            print_label(&cursor, &doc);
+            cursor.next();
+        }
     }
 
     use rsnltk::native::nlpsvc::annotated_document::*;
-
     fn print_label(cursor: &TreeCursor, doc: &AnnotatedDocument) {
         let label = cursor.get().unwrap();
         let span = label.get_span().unwrap();
@@ -21,6 +27,7 @@ mod tests {
                  &doc.get_text()[span.0..span.1]);
     }
 
+    // Manually set token information
     #[test]
     fn push_tokens_and_traverse() {
         // Fake tokenizer
@@ -50,6 +57,7 @@ mod tests {
     fn test_chunking() {
         let txt = "aa bb cc dd ee ff";
         let mut doc = AnnotatedDocument::new(txt);
+        // split by whitespace and iterate
         for (i, _) in txt.split_whitespace().enumerate() {
             let b = i * 3;
             let e = b + 2;
