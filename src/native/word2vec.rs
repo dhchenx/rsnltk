@@ -8,7 +8,7 @@ mod tests{
     use std::borrow::Borrow;
     use crate::native::word2vec::*;
 
-    # [test]
+    
     fn test_word2vec(){
             //this is an issue to fix
             let clusters=wv_clusters_create("D:\\UIBEResearch\\classes.txt");
@@ -16,7 +16,7 @@ mod tests{
             println!("index = {}",index);
     }
 
-    # [test]
+    
     fn test_open_wv_bin(){
         let wv_model=wv_get_model("D:\\UIBEResearch\\GoogleNews-vectors-negative300.bin\\GoogleNews-vectors-negative300.bin");
         let positive = vec!["woman", "king"];
@@ -25,7 +25,7 @@ mod tests{
         println!("cosine: {:?}", wv_cosine(&wv_model,"man", 10));
     }
 
-    # [test]
+   
     fn test_origin(){
 /*
     let model = word2vec::wordvectors::WordVector::load_from_binary(
