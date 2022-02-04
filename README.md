@@ -3,6 +3,8 @@ A Rust library to support natural language processing with pure Rust implementat
 
 [Rust Docs](https://docs.rs/rsnltk/0.1.1) | [Crates Home Page](https://crates.io/crates/rsnltk) | [Tests](https://github.com/dhchenx/rsnltk/tree/main/tests) | [NER-Kit](https://pypi.org/project/ner-kit/)
 
+![example workflow](https://github.com/dhchenx/rsnltk/actions/workflows/rust.yml/badge.svg)
+
 ## Features
 The `rsnltk` library integrates various existing Python-written NLP toolkits for powerful text analysis in Rust-based applications. 
 
